@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jadwal Balapan — Daftar</title>
+  <style>
+    :root{--bg:#f7f8fb;--card:#fff;--muted:#6b7280;--accent:#2563eb;--danger:#ef4444;--border:#e6e9ef;--radius:8px;font-family:system-ui, -apple-system, "Segoe UI", Roboto;}
+    html,body{height:100%;margin:0;background:var(--bg);}
+    .container{max-width:980px;margin:36px auto;padding:18px;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    thead th{ text-align:left;padding:12px 10px;background:transparent;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border)}
+    tbody td{padding:12px 10px;border-bottom:1px solid var(--bg);vertical-align:middle}
+    .col-id{width:48px;color:var(--muted);}
+    .col-actions{width:170px;text-align:right}
+    .btn{display:inline-block;padding:8px 10px;border-radius:6px;border:1px solid transparent;font-size:13px;cursor:pointer;text-decoration:none;}
+    .btn-edit{background:transparent;color:var(--accent)}
+    .btn-delete{background:transparent;color:var(--danger);margin-left:8px}
+    .btn-add{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:8px;display:inline-flex;align-items:center;gap:8px}
+  </style>
+</head>
+<body>
+
+<!-- NAV MENU GLOBAL -->
+<div style="margin: 20px 0; text-align: center;">
+  <a href="index.php?menu=pembalap" 
+     style="padding: 8px 14px; background:#2563eb; color:white; text-decoration:none; border-radius:6px; margin-right:10px;">
+     Pembalap
+  </a>
+
+  <a href="index.php?menu=jadwal" 
+     style="padding: 8px 14px; background:#16a34a; color:white; text-decoration:none; border-radius:6px;">
+     Jadwal Balapan
+  </a>
+</div>
+
+<a href="index.php?menu=jadwal&screen=add" 
+   class="btn btn-add" 
+   style="padding: 8px 14px; background:#28a745; color:white; 
+          text-decoration:none; border-radius:5px; margin-bottom:10px; display:inline-block;">
+   + Tambah Jadwal
+</a>
+
+
+  <div class="container">
+    <div class="card">
+      <h1>Daftar Jadwal Balapan</h1>
+      <div style="overflow:auto;">
+        <table role="table" aria-label="Daftar Jadwal">
+          <thead>
+            <tr>
+              <th class="col-id">No</th>
+              <th>Seri</th>
+              <th>Tanggal</th>
+              <th>Lokasi</th>
+              <th>Jenis</th>
+              <th>Jumlah Lap</th>
+              <th>Durasi (menit)</th>
+              <th class="col-actions">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- PHP will inject rows here -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">
+        <div style="color:var(--muted);font-size:13px">Total:</div>
+        <div>
+          <a href="index.php?menu=jadwal&screen=add" class="btn btn-add" id="btn-add">+ Tambah Jadwal</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('click', function(e){
+      var d = e.target.closest && e.target.closest('.btn-delete');
+      if(!d) return;
+      var id = d.getAttribute('data-id');
+      if(!id) return;
+      var ok = confirm('Yakin ingin menghapus jadwal #' + id + '?');
+      if(!ok) return;
+
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'index.php';
+
+      var menuInput = document.createElement('input');
+      menuInput.type = 'hidden'; menuInput.name = 'menu'; menuInput.value = 'jadwal';
+      form.appendChild(menuInput);
+
+      var actionInput = document.createElement('input');
+      actionInput.type = 'hidden'; actionInput.name = 'action'; actionInput.value = 'delete';
+      form.appendChild(actionInput);
+
+      var idInput = document.createElement('input');
+      idInput.type = 'hidden'; idInput.name = 'id'; idInput.value = id;
+      form.appendChild(idInput);
+
+      document.body.appendChild(form);
+      form.submit();
+    });
+  </script>
+</body>
+</html>

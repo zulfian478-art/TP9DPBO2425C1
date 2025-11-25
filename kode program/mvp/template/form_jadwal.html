@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Form Jadwal Balapan</title>
+  <style>
+    :root{--bg:#f7f8fb;--card:#fff;--muted:#6b7280;--accent:#2563eb;--border:#e6e9ef;--radius:8px;font-family:system-ui, -apple-system, "Segoe UI", Roboto;}
+    html,body{height:100%;margin:0;background:var(--bg);}
+    .container{max-width:700px;margin:36px auto;padding:18px;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .full{grid-column:1/-1}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input, select{padding:10px;border:1px solid var(--border);border-radius:6px;width:100%;box-sizing:border-box}
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+    .btn{padding:10px 14px;border-radius:8px;border:1px solid transparent;font-size:14px;cursor:pointer}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-muted{background:transparent;border:1px solid var(--border)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Form Jadwal Balapan</h1>
+      <form method="post" action="index.php" novalidate data-form="jadwal">
+        <input type="hidden" name="menu" value="jadwal">
+        <input type="hidden" name="action" value="add" id="jadwal-action" data-field>
+        <input type="hidden" name="id" value="" id="jadwal-id" data-field>
+
+        <div class="full">
+          <label for="seri">Seri</label>
+          <input id="seri" name="seri" type="text" placeholder="Nama seri balapan" required data-field>
+        </div>
+
+        <div>
+          <label for="tanggal">Tanggal</label>
+          <input id="tanggal" name="tanggal" type="date" required data-field>
+        </div>
+
+        <div>
+          <label for="lokasi">Lokasi</label>
+          <input id="lokasi" name="lokasi" type="text" placeholder="Kota atau negara" required data-field>
+        </div>
+
+        <div>
+          <label for="jenis">Jenis Lomba</label>
+          <select id="jenis" name="jenis" required data-field>
+            <option value="Main Race">Main Race</option>
+            <option value="Sprint">Sprint</option>
+            <option value="Qualifying">Qualifying</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="jumlah_lap">Jumlah Lap (opsional)</label>
+          <input id="jumlah_lap" name="jumlah_lap" type="number" min="1" step="1" placeholder="Contoh: 58" data-field>
+        </div>
+
+        <div>
+          <label for="durasi_menit">Durasi (menit) (opsional)</label>
+          <input id="durasi_menit" name="durasi_menit" type="number" min="1" step="1" placeholder="Contoh: 120" data-field>
+        </div>
+
+        <div class="full actions">
+          <a href="index.php?menu=jadwal" class="btn btn-muted">Batal</a>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var form = document.querySelector('form[data-form="jadwal"]');
+      if(!form) return;
+      form.addEventListener('submit', function(e){
+        var seri = document.getElementById('seri');
+        var tanggal = document.getElementById('tanggal');
+        var lokasi = document.getElementById('lokasi');
+        if(!seri.value.trim()){ alert('Seri harus diisi'); seri.focus(); e.preventDefault(); return false; }
+        if(!tanggal.value){ alert('Tanggal harus diisi'); tanggal.focus(); e.preventDefault(); return false; }
+        if(!lokasi.value.trim()){ alert('Lokasi harus diisi'); lokasi.focus(); e.preventDefault(); return false; }
+      });
+    })();
+  </script>
+</body>
+</html>
